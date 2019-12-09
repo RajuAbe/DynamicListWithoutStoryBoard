@@ -21,31 +21,22 @@ class DetailsTableViewCell: UITableViewCell {
     }()
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     var descriptionLabel:UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 13)
         
         //label.backgroundColor =  colorLiteral(red: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
         //label.numberOfLines = 0
         //label.lineBreakMode = .byWordWrapping
-        label.backgroundColor = UIColor.yellow
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    var labelContainerView:UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true // this will make sure its children do not go out of the boundary
-        view.backgroundColor = UIColor.lightGray
-        return view
-    }()
-    
-    
+    var descriptionHeightConstraint: NSLayoutConstraint!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -71,10 +62,6 @@ class DetailsTableViewCell: UITableViewCell {
         self.contentView.addSubview(profileImageView)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(descriptionLabel)
-//        addSubview(profileImageView)
-//        addSubview(labelContainerView)
-//        addSubview(titleLabel)
-//        addSubview(descriptionLabel)
         
         // imageView autolayouts
         profileImageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
@@ -82,13 +69,6 @@ class DetailsTableViewCell: UITableViewCell {
         profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        // ContainerView autoLayouts
-        /*
-        labelContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8).isActive = true
-        labelContainerView.leadingAnchor.constraint(equalToSystemSpacingAfter: profileImageView.trailingAnchor, multiplier: 10).isActive = true
-        labelContainerView.trailingAnchor.constraint(equalToSystemSpacingAfter: self.contentView.trailingAnchor, multiplier: 10).isActive = true
-        labelContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 5).isActive = true
-        */
         // title Label
         titleLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 5).isActive = true
@@ -99,14 +79,19 @@ class DetailsTableViewCell: UITableViewCell {
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
         descriptionLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor, constant: -10).isActive = true
+        let bottomConstraint = descriptionLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor, constant: -5)
+        bottomConstraint.priority = .defaultLow
+        bottomConstraint.isActive = true
+        descriptionHeightConstraint = descriptionLabel.heightAnchor.constraint(equalToConstant: 17)
+        descriptionHeightConstraint.isActive = true
+        
     }
     
     internal func configCell(at indexPath: IndexPath, rowData row: Rows) {
-        let height = descriptionLabel.heightForLabel(text: row.description ?? "", font: UIFont.systemFont(ofSize: 14), width: contentView.bounds.width-60)
+        let height = descriptionLabel.heightForLabel(text: row.description ?? "", font: UIFont.systemFont(ofSize: 13), width: contentView.bounds.width-78)
+        
         self.titleLabel.text = row.title ?? ""
-        //self.descriptionLabel.text = description
-        descriptionLabel.heightAnchor.constraint(equalToConstant: height).isActive = true
+        descriptionHeightConstraint.constant = height
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         
@@ -122,11 +107,6 @@ class DetailsTableViewCell: UITableViewCell {
         else {
             self.profileImageView.image = image
         }
-        print("New height \(height)")
-        if height == 0 {
-            
-        }
-        
     }
 }
 

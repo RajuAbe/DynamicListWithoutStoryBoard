@@ -19,6 +19,7 @@
 		17EC8025239D3FBE008FC042 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EC8024239D3FBE008FC042 /* Constants.swift */; };
 		17EC8028239D44BB008FC042 /* HomeScreenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EC8027239D44BB008FC042 /* HomeScreenDetails.swift */; };
 		17EC802A239D6C29008FC042 /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EC8029239D6C29008FC042 /* DetailsTableViewCell.swift */; };
+		17F685BE239E58E10026A88C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F685BD239E58E10026A88C /* HomeViewModel.swift */; };
 		85CAC39EEC1102532B25E97F /* Pods_DynamicListWithoutStoryBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57E6A97B4379009EA91A5AF5 /* Pods_DynamicListWithoutStoryBoard.framework */; };
 		A814726FF777EB169EBCD8A5 /* Pods_DynamicListWithoutStoryBoard_DynamicListWithoutStoryBoardUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518B7EB40B4542B27F685A87 /* Pods_DynamicListWithoutStoryBoard_DynamicListWithoutStoryBoardUITests.framework */; };
 		C57BA65715071236F8A64CEC /* Pods_DynamicListWithoutStoryBoardTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B15319429548A5EDA20535 /* Pods_DynamicListWithoutStoryBoardTests.framework */; };
@@ -61,6 +62,7 @@
 		17EC8024239D3FBE008FC042 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		17EC8027239D44BB008FC042 /* HomeScreenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenDetails.swift; sourceTree = "<group>"; };
 		17EC8029239D6C29008FC042 /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
+		17F685BD239E58E10026A88C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		2577126E9E8300E34EE10B38 /* Pods-DynamicListWithoutStoryBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DynamicListWithoutStoryBoard.release.xcconfig"; path = "Target Support Files/Pods-DynamicListWithoutStoryBoard/Pods-DynamicListWithoutStoryBoard.release.xcconfig"; sourceTree = "<group>"; };
 		28E0A35C47423A4078112FCE /* Pods-DynamicListWithoutStoryBoard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DynamicListWithoutStoryBoard.debug.xcconfig"; path = "Target Support Files/Pods-DynamicListWithoutStoryBoard/Pods-DynamicListWithoutStoryBoard.debug.xcconfig"; sourceTree = "<group>"; };
 		2FF5DB2BAFBC231C0D5BAE67 /* Pods-DynamicListWithoutStoryBoardTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DynamicListWithoutStoryBoardTests.release.xcconfig"; path = "Target Support Files/Pods-DynamicListWithoutStoryBoardTests/Pods-DynamicListWithoutStoryBoardTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				175F5A20239D36BC00113E86 /* LaunchScreen.storyboard */,
 				175F5A23239D36BC00113E86 /* Info.plist */,
 				17EC8029239D6C29008FC042 /* DetailsTableViewCell.swift */,
+				17F685BD239E58E10026A88C /* HomeViewModel.swift */,
 			);
 			path = DynamicListWithoutStoryBoard;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				175F5A16239D36B800113E86 /* AppDelegate.swift in Sources */,
+				17F685BE239E58E10026A88C /* HomeViewModel.swift in Sources */,
 				175F5A18239D36B800113E86 /* SceneDelegate.swift in Sources */,
 				17EC8028239D44BB008FC042 /* HomeScreenDetails.swift in Sources */,
 				17EC8021239D3DAC008FC042 /* NetworkRequest.swift in Sources */,
