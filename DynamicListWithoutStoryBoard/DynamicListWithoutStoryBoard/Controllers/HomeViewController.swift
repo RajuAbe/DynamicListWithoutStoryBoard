@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.view.addSubview(tableView)
+        self.tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "detailsCell")
         self.addCOnstrains()
         self.getList()
         // Do any additional setup after loading the view.
@@ -43,6 +44,9 @@ class HomeViewController: UIViewController {
 
         self.view.backgroundColor = UIColor.red
         self.tableView.backgroundColor = UIColor.white
+        self.tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableView.automaticDimension
+        
     }
 }
 
@@ -77,11 +81,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        if let title = self.screenDetails?.rows[indexPath.row].title {
-            cell.textLabel?.text = title
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell", for: indexPath) as! DetailsTableViewCell
+        if let rowData = self.screenDetails?.rows[indexPath.row] {
+            cell.configCell(at: indexPath, rowData: rowData)
         }
-        
+        cell.layoutSubviews()
         return cell
     }
 }
