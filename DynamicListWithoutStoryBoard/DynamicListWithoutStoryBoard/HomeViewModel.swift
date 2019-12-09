@@ -29,9 +29,17 @@ extension HomeViewModel {
                 })
                 print("filtered rows:\(String(describing: self.screenDetails?.rows.count))")
                 completion(.Success(""))
-            } else if let error = response["error"] as? String{
-                completion(.Failed(error))
+                return
             }
+             guard let error = response["error"] as? String else {
+                guard let error = response["error"] as? NSError else {
+                    completion(.Failed("Please try again"))
+                    return
+                }
+                completion(.Failed(error.localizedDescription))
+                return
+            }
+             completion(.Failed(error))
         }
         
     }

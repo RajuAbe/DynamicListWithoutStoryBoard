@@ -12,14 +12,14 @@ protocol ApiResource {
     //associatedtype Model
     var methodPath: String { get }
     var body: Dictionary<String,Any>?{get}
-    //func makeModel(serialization: Serialization) -> Model
 }
 
 extension ApiResource {
     var url: URL {
-        let url =  methodPath
+        
+        let url =  methodPath //add base url here..
         let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-        print("URL IS ::: \(String(describing: urlString))")
+        //print("URL IS ::: \(String(describing: urlString))")
         return URL(string: urlString!)!
     }
 }

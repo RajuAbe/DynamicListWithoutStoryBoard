@@ -88,7 +88,6 @@ extension HomeViewController {
             case .Success(_):
                 self.placeHolderString = "Loading.."
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
                     self.title = self.viewModel.screenDetails?.title
                 }
             case .Failed(let msg):
@@ -96,6 +95,10 @@ extension HomeViewController {
                 print("Failed with \(msg)")
             default:
                 break
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
