@@ -23,11 +23,28 @@ class DynamicListWithoutStoryBoardUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
+    func testScrollToTableLastCell() {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
-
+        //let promise = expectation(description: "table scrolled successfully")
+        let table = app.descendants(matching: .table).firstMatch
+        //let count = table.cells.count
+        //print("Count \(count)")
+        sleep(15)
+       guard let lastCell = table.cells.allElementsBoundByIndex.last else {
+            XCTFail("No tablecell found")
+            return
+        }
+        let MAX_SCROLLS = 10
+        var count = 0
+        while lastCell.isHittable == false && count < MAX_SCROLLS {
+            app.swipeUp()
+            count += 1
+            
+        }
+        //promise.fulfill()
+        //wait(for: [promise], timeout: 15)
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
