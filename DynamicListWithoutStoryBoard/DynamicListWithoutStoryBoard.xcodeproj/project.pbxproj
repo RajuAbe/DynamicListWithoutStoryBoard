@@ -109,6 +109,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		1743A5A6239EC0CB004A29D8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				17EC8029239D6C29008FC042 /* DetailsTableViewCell.swift */,
+				175F5A20239D36BC00113E86 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		175F5A09239D36B800113E86 = {
 			isa = PBXGroup;
 			children = (
@@ -134,13 +143,12 @@
 		175F5A14239D36B800113E86 /* DynamicListWithoutStoryBoard */ = {
 			isa = PBXGroup;
 			children = (
+				1743A5A6239EC0CB004A29D8 /* Views */,
 				1743A5A5239EBFF0004A29D8 /* ViewModel */,
 				17EC8026239D4457008FC042 /* Models */,
 				175F5A46239D36F000113E86 /* Support */,
 				175F5A45239D36E000113E86 /* Controllers */,
-				175F5A20239D36BC00113E86 /* LaunchScreen.storyboard */,
 				175F5A23239D36BC00113E86 /* Info.plist */,
-				17EC8029239D6C29008FC042 /* DetailsTableViewCell.swift */,
 			);
 			path = DynamicListWithoutStoryBoard;
 			sourceTree = "<group>";
