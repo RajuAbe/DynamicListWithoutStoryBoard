@@ -7,7 +7,11 @@
 //
 
 import Foundation
-
+/**
+ API Respurce protocol
+    - Variable methodPath: url method path
+    - body: request body
+ */
 protocol ApiResource {
     //associatedtype Model
     var methodPath: String { get }
@@ -23,7 +27,9 @@ extension ApiResource {
         return URL(string: urlString!)!
     }
 }
-
+/**
+    Get list api resopurce 
+ */
 struct GetListResource: ApiResource {
     var methodPath: String = APIMethods.getList.rawValue
     var body: Dictionary<String, Any>?

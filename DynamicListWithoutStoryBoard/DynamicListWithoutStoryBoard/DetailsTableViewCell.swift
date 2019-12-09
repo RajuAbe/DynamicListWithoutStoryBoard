@@ -10,7 +10,10 @@ import UIKit
 import SDWebImage
 
 class DetailsTableViewCell: UITableViewCell {
-    
+    /**
+     Profile imageview
+        - cornerRadius = 30 (circular)
+     */
     var profileImageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -19,12 +22,18 @@ class DetailsTableViewCell: UITableViewCell {
         image.clipsToBounds = true
         return image
     }()
+    /**
+        Title label with font size 15
+     */
     var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    /**
+        description label with font size 13
+     */
     var descriptionLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
@@ -35,7 +44,7 @@ class DetailsTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+    // Height constraint for dynamic height
     var descriptionHeightConstraint: NSLayoutConstraint!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -55,7 +64,11 @@ class DetailsTableViewCell: UITableViewCell {
         super.init(coder: coder)
         //fatalError("init(coder:) has not been implemented")
     }
-    
+    /**
+        Initializing the UI
+        -
+     - Contains all constarints
+     */
     private func initializeUI() {
         let marginGuide = contentView.layoutMarginsGuide
         
@@ -86,7 +99,12 @@ class DetailsTableViewCell: UITableViewCell {
         descriptionHeightConstraint.isActive = true
         
     }
-    
+    /**
+     Configuring `DetailsTableviewCell`
+     - Parameter indexPath: UItableview indexpath
+     - Parameter rowData row: Rows dynamic value
+     - setting image view and all labels value
+     */
     internal func configCell(at indexPath: IndexPath, rowData row: Rows) {
         let height = descriptionLabel.heightForLabel(text: row.description ?? "", font: UIFont.systemFont(ofSize: 13), width: contentView.bounds.width-78)
         
@@ -110,8 +128,15 @@ class DetailsTableViewCell: UITableViewCell {
     }
 }
 
+// MARK:- UILabel Extension for calculating dynamic height
 extension UILabel {
 
+    /**
+        calulating dynamic height
+     - Parameter text: text assigning into label in String format
+     - Parameter font: font for the label
+     - Parameter width: with of container label
+     */
     func heightForLabel(text:String, font:UIFont, width:CGFloat) -> CGFloat {
         let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0

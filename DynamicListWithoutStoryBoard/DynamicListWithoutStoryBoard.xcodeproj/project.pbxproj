@@ -101,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1743A5A5239EBFF0004A29D8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				17F685BD239E58E10026A88C /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		175F5A09239D36B800113E86 = {
 			isa = PBXGroup;
 			children = (
@@ -126,15 +134,13 @@
 		175F5A14239D36B800113E86 /* DynamicListWithoutStoryBoard */ = {
 			isa = PBXGroup;
 			children = (
+				1743A5A5239EBFF0004A29D8 /* ViewModel */,
 				17EC8026239D4457008FC042 /* Models */,
-				17EC801F239D3CB2008FC042 /* Network */,
 				175F5A46239D36F000113E86 /* Support */,
 				175F5A45239D36E000113E86 /* Controllers */,
-				175F5A1E239D36BC00113E86 /* Assets.xcassets */,
 				175F5A20239D36BC00113E86 /* LaunchScreen.storyboard */,
 				175F5A23239D36BC00113E86 /* Info.plist */,
 				17EC8029239D6C29008FC042 /* DetailsTableViewCell.swift */,
-				17F685BD239E58E10026A88C /* HomeViewModel.swift */,
 			);
 			path = DynamicListWithoutStoryBoard;
 			sourceTree = "<group>";
@@ -168,6 +174,8 @@
 		175F5A46239D36F000113E86 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				175F5A1E239D36BC00113E86 /* Assets.xcassets */,
+				17EC801F239D3CB2008FC042 /* Network */,
 				175F5A17239D36B800113E86 /* SceneDelegate.swift */,
 				175F5A15239D36B800113E86 /* AppDelegate.swift */,
 				17EC8024239D3FBE008FC042 /* Constants.swift */,

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+// ViewModel
 class HomeViewModel {
     var screenDetails: HomeScreenDetails?
 }
@@ -27,7 +27,7 @@ extension HomeViewModel {
                     }
                     return true
                 })
-                print("filtered rows:\(String(describing: self.screenDetails?.rows.count))")
+                //print("filtered rows:\(String(describing: self.screenDetails?.rows.count))")
                 completion(.Success(""))
                 return
             }

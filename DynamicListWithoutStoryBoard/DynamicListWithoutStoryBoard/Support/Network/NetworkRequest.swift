@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+
+// MARK:- HTTP methods enum
 enum HTTPMethods: String {
     case POST
     case GET
@@ -15,6 +17,7 @@ enum HTTPMethods: String {
     case DELETE
 }
 
+// MARK:- Network Request protocol
 protocol NetworkRequest: class {
     //associatedtype Model
     func loadWithData(httpMethod: HTTPMethods, withCompletion completion: @escaping (_ fullResponse: NSDictionary, _ statusCode:Int,_ data: Data?) -> Void)
@@ -22,7 +25,15 @@ protocol NetworkRequest: class {
 }
 
 extension NetworkRequest {
-    
+    /**
+     Network request call
+     
+     - Parameter request: URL Request
+     - Parameter Data: response in dictionary format
+     - Parameter statusCode: HTTP Status code in Int format
+     - Parameter data: response in Data format(optional)
+     
+     */
     fileprivate func loadWithRequest(withRequest request:URLRequest, withCompletion completion: @escaping (_ Data: NSDictionary, _ statusCode:Int, _ data: Data?) -> Void) {
         
         let configuration = URLSessionConfiguration.ephemeral
@@ -37,13 +48,6 @@ extension NetworkRequest {
                 completion(["error":"Please try again"], 500, nil)
                 return
             }
-            //print("\n ---->>>>>All Header Fields :\(httpResponse.allHeaderFields) \n")
-            if let token = httpResponse.allHeaderFields["token"] as? String {
-                UserDefaults.standard.set(token, forKey: "token")
-                UserDefaults.standard.synchronize()
-            }
-            
-           
             
             guard let resposeData = data else {
                 guard let error = error else {
@@ -56,6 +60,7 @@ extension NetworkRequest {
             do {
                let responseStrInISOLatin = String(data: resposeData, encoding: String.Encoding.isoLatin1)
                guard let modifiedDataInUTF8Format = responseStrInISOLatin?.data(using: String.Encoding.utf8) else {
+                completion(["error":"could not convert data to UTF-8 format"], httpResponse.statusCode, resposeData)
                      print("could not convert data to UTF-8 format")
                      return
                 }
@@ -71,11 +76,6 @@ extension NetworkRequest {
                     completion(dict as NSDictionary, httpResponse.statusCode, modifiedDataInUTF8Format)
                     return
                 }
-                
-                
-                
-                
-               // print("\n Response ---- \(responseDict)")
                 completion(responseDict as NSDictionary, httpResponse.statusCode, modifiedDataInUTF8Format)
                 
             }
@@ -88,10 +88,9 @@ extension NetworkRequest {
         dataTask.resume()
     }
 }
-
+// MARK:- API Request
 class ApiRequest<Resource: ApiResource> {
     let resource: Resource
-    //let reachability = Reachability()!
     init(resource: Resource) {
         self.resource = resource
     }
@@ -105,8 +104,6 @@ extension ApiRequest: NetworkRequest {
         
         
         if let reqData = resource.body {
-            //  print("Request Before sending:\(reqData)")
-            
             let jsonData = try! JSONSerialization.data(withJSONObject: reqData, options: [.prettyPrinted])
             if let str = String(data: jsonData, encoding: String.Encoding.utf8){
                 print("\n\n JSON STring: " + str)
@@ -121,7 +118,7 @@ extension ApiRequest: NetworkRequest {
     }
 }
 
-
+// MARK:- Network request state
 enum NetworkRequestState {
     case Success(String?)
     case Failed(String)
