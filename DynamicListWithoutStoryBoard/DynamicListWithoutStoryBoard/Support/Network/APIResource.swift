@@ -21,7 +21,7 @@ protocol ApiResource {
 extension ApiResource {
     var url: URL {
         
-        let url =  methodPath //add base url here..
+        let url =  Utilities.endPointUrl+methodPath //add base url here..
         let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         //print("URL IS ::: \(String(describing: urlString))")
         return URL(string: urlString!)!
