@@ -21,7 +21,7 @@ class Utilities {
     
     // Base URL
     static var endPointUrl: String {
-            guard let env = stringResourceForID(resourceID: "EndpiontUrl", plistResource: Plists.Info.rawValue) else {
+        guard let env = stringResourceForID(resourceID: AppConstants.EndpiontUrl.rawValue, plistResource: Plists.Info.rawValue) else {
                 return ""
             }
             return env
@@ -41,3 +41,21 @@ extension Utilities {
         return val
     }
 }
+
+struct URLSessionError: Swift.Error {
+    public let file: StaticString
+    public let function: StaticString
+    public let line: UInt
+    public let message:String
+    public let statusCode: Int
+    
+    public init(message: String, statusCode:Int, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+        self.file = file
+        self.function = function
+        self.line = line
+        self.message = message
+        self.statusCode = statusCode
+    }
+    
+}
+

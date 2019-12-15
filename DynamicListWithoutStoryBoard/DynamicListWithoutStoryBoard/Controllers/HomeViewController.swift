@@ -11,14 +11,18 @@ import UIKit
 class HomeViewController: UIViewController {
 
     //var collectionView: UICollectionView = UICollectionView()
-    var tableView: UITableView!
+    var tableView: UITableView =  {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor.groupTableViewBackground
+        return tableView
+    }()
     var refreshController: UIRefreshControl!
     var isDownloading:Bool = false
     var viewModel: HomeViewModel = HomeViewModel()
     var placeHolderString: String = ""
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.groupTableViewBackground
         //self.collectionView.frame = view.frame
         self.view = view
         
@@ -27,11 +31,12 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.placeHolderString = "Downloading..."
-        self.tableView = UITableView()//UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .grouped) //UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        //self.tableView.style = UITableView.Style.grouped
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.view.addSubview(tableView)
-        self.tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "detailsCell")
+        self.tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: AppConstants.cellIdentifier.rawValue)
         self.tableView.tableFooterView = UIView()
         self.addConstraints()
         self.addRefreshController()
@@ -48,8 +53,6 @@ class HomeViewController: UIViewController {
         tableView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
 
-        self.view.backgroundColor = UIColor.red
-        self.tableView.backgroundColor = UIColor.white
         self.tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         
@@ -104,7 +107,7 @@ extension HomeViewController {
     }
 }
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         let count = self.viewModel.screenDetails?.rows.count ?? 0
         let label = UILabel()
         label.textAlignment = .center
@@ -113,13 +116,23 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         return count
     }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell", for: indexPath) as! DetailsTableViewCell
-        if let rowData = self.viewModel.screenDetails?.rows[indexPath.row] {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AppConstants.cellIdentifier.rawValue, for: indexPath) as! DetailsTableViewCell
+        if let rowData = self.viewModel.screenDetails?.rows[indexPath.section] {
             cell.configCell(at: indexPath, rowData: rowData)
         }
         cell.layoutSubviews()
         return cell
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5.0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
     }
 }

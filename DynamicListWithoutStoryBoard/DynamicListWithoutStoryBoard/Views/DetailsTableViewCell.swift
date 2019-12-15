@@ -64,6 +64,10 @@ class DetailsTableViewCell: UITableViewCell {
         super.init(coder: coder)
         //fatalError("init(coder:) has not been implemented")
     }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+//    }
     /**
         Initializing the UI
         -
@@ -106,14 +110,14 @@ class DetailsTableViewCell: UITableViewCell {
      - setting image view and all labels value
      */
     internal func configCell(at indexPath: IndexPath, rowData row: Rows) {
-        let height = descriptionLabel.heightForLabel(text: row.description ?? "", font: UIFont.systemFont(ofSize: 13), width: contentView.bounds.width-78)
+        let height = descriptionLabel.heightForLabel(text: row.description ?? AppConstants.noData.rawValue, font: UIFont.systemFont(ofSize: 13), width: contentView.bounds.width-78)
         
-        self.titleLabel.text = row.title ?? ""
+        self.titleLabel.text = row.title ?? AppConstants.noData.rawValue
         descriptionHeightConstraint.constant = height
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         
-        descriptionLabel.text = row.description ?? ""
+        descriptionLabel.text = row.description ?? AppConstants.noData.rawValue
         descriptionLabel.sizeToFit()
         
         let image = UIImage(named: "no_image")

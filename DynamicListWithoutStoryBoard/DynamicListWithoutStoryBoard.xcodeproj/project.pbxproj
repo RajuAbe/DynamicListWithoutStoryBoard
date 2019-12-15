@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1743B19523A2892600958528 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1743B19423A2892600958528 /* Constants.swift */; };
 		175F5A16239D36B800113E86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175F5A15239D36B800113E86 /* AppDelegate.swift */; };
 		175F5A18239D36B800113E86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175F5A17239D36B800113E86 /* SceneDelegate.swift */; };
 		175F5A1F239D36BC00113E86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 175F5A1E239D36BC00113E86 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		17353046FAFB504C9AAA6094 /* Pods-DynamicListWithoutStoryBoard-DynamicListWithoutStoryBoardUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DynamicListWithoutStoryBoard-DynamicListWithoutStoryBoardUITests.release.xcconfig"; path = "Target Support Files/Pods-DynamicListWithoutStoryBoard-DynamicListWithoutStoryBoardUITests/Pods-DynamicListWithoutStoryBoard-DynamicListWithoutStoryBoardUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1743B19423A2892600958528 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		175F5A12239D36B800113E86 /* DynamicListWithoutStoryBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicListWithoutStoryBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		175F5A15239D36B800113E86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		175F5A17239D36B800113E86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				175F5A17239D36B800113E86 /* SceneDelegate.swift */,
 				175F5A15239D36B800113E86 /* AppDelegate.swift */,
 				17EC8024239D3FBE008FC042 /* Utilities.swift */,
+				1743B19423A2892600958528 /* Constants.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				175F5A18239D36B800113E86 /* SceneDelegate.swift in Sources */,
 				17EC8028239D44BB008FC042 /* HomeScreenDetails.swift in Sources */,
 				17EC8021239D3DAC008FC042 /* NetworkRequest.swift in Sources */,
+				1743B19523A2892600958528 /* Constants.swift in Sources */,
 				17EC8023239D3EC0008FC042 /* APIResource.swift in Sources */,
 				175F5A48239D371F00113E86 /* HomeViewController.swift in Sources */,
 				17EC802A239D6C29008FC042 /* DetailsTableViewCell.swift in Sources */,

@@ -20,7 +20,7 @@ enum HTTPMethods: String {
 // MARK:- Network Request protocol
 protocol NetworkRequest: class {
     //associatedtype Model
-    func loadWithData(httpMethod: HTTPMethods, withCompletion completion: @escaping (_ fullResponse: NSDictionary, _ statusCode:Int,_ data: Data?) -> Void)
+    func loadWithData(httpMethod: HTTPMethods, withCompletion completion: @escaping (_ error: URLSessionError?, _ statusCode:Int,_ data: Data?) -> Void)
     
 }
 
@@ -34,53 +34,59 @@ extension NetworkRequest {
      - Parameter data: response in Data format(optional)
      
      */
-    fileprivate func loadWithRequest(withRequest request:URLRequest, withCompletion completion: @escaping (_ Data: NSDictionary, _ statusCode:Int, _ data: Data?) -> Void) {
+    fileprivate func loadWithRequest(withRequest request:URLRequest, withCompletion completion: @escaping (_ error: URLSessionError?, _ statusCode:Int, _ data: Data?) -> Void) {
         
         let configuration = URLSessionConfiguration.ephemeral
         let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
         
+        
+        
         let dataTask = session.dataTask(with: request, completionHandler: {(data, urlResponse, error) in
             guard let httpResponse = urlResponse as? HTTPURLResponse else {
-                if let eror = error {
-                    completion(["error":eror], 500, nil)
+                if let error = error {
+                    //completion(["error":eror], 500, nil)
+                    //throw Error(message: eror.localizedDescription)
+                    completion(URLSessionError(message: error.localizedDescription, statusCode: 500), 500, nil)
                     return
                 }
-                completion(["error":"Please try again"], 500, nil)
+                completion(URLSessionError(message: AppConstants.noResponse.rawValue, statusCode: 500), 500, nil)
                 return
             }
             
             guard let resposeData = data else {
                 guard let error = error else {
-                    completion(["error":"No Error No Data"], httpResponse.statusCode, nil)
+                    //completion(["error":"No Error No Data"], httpResponse.statusCode, nil)
+                    completion(URLSessionError(message: AppConstants.noResponse.rawValue, statusCode: 500), 500, nil)
                     return
                 }
-                completion(["error":error], httpResponse.statusCode, nil)
+                completion(URLSessionError(message: error.localizedDescription, statusCode: httpResponse.statusCode), httpResponse.statusCode, nil)
                 return
             }
             do {
                let responseStrInISOLatin = String(data: resposeData, encoding: String.Encoding.isoLatin1)
                guard let modifiedDataInUTF8Format = responseStrInISOLatin?.data(using: String.Encoding.utf8) else {
-                completion(["error":"could not convert data to UTF-8 format"], httpResponse.statusCode, resposeData)
-                     print("could not convert data to UTF-8 format")
+                completion(URLSessionError(message: "could not convert data to UTF-8 format", statusCode: httpResponse.statusCode), httpResponse.statusCode, nil)
+                     //print("could not convert data to UTF-8 format")
                      return
                 }
-                //let dict = ["data":""]
-                //completion(dict as NSDictionary, httpResponse.statusCode, modifiedDataInUTF8Format)
                 
+                 // JSONSerialization
+                 /*
                 guard let responseDict = try JSONSerialization.jsonObject(with: modifiedDataInUTF8Format, options: [.allowFragments]) as? [String:Any] else {
                     guard let resp = try JSONSerialization.jsonObject(with: modifiedDataInUTF8Format, options: [.allowFragments]) as? NSArray else {
-                        completion(["error":"Not able to read Data"], httpResponse.statusCode, modifiedDataInUTF8Format)
+                        completion(URLSessionError(message: "Not able to read data", statusCode: httpResponse.statusCode), httpResponse.statusCode, nil)
                         return
                     }
-                    let dict = ["data":resp]
-                    completion(dict as NSDictionary, httpResponse.statusCode, modifiedDataInUTF8Format)
+                    completion(nil, httpResponse.statusCode, modifiedDataInUTF8Format)
+                    //completion(dict as NSDictionary, httpResponse.statusCode, modifiedDataInUTF8Format)
                     return
                 }
-                completion(responseDict as NSDictionary, httpResponse.statusCode, modifiedDataInUTF8Format)
+                */
+               completion(nil, httpResponse.statusCode, modifiedDataInUTF8Format)
                 
             }
             catch let eror as NSError {
-                completion(["error":eror], httpResponse.statusCode, nil)
+                completion(URLSessionError(message: eror.localizedDescription, statusCode: httpResponse.statusCode), httpResponse.statusCode, nil)
             }
             
             
@@ -97,7 +103,7 @@ class ApiRequest<Resource: ApiResource> {
 }
 
 extension ApiRequest: NetworkRequest {
-    func loadWithData(httpMethod: HTTPMethods, withCompletion completion: @escaping (NSDictionary, Int, Data?) -> Void) {
+    func loadWithData(httpMethod: HTTPMethods, withCompletion completion: @escaping (URLSessionError?, Int, Data?) -> Void) {
         var request = URLRequest(url: resource.url)
         request.httpMethod = httpMethod.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -114,7 +120,6 @@ extension ApiRequest: NetworkRequest {
         
         print(">>>>>>>\(request)")
         loadWithRequest(withRequest: request, withCompletion: completion)
-        
     }
 }
 
