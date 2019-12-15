@@ -16,30 +16,29 @@ extension HomeViewModel {
         let resource = GetListResource()
         let request = ApiRequest(resource: resource)
         
-        request.loadWithData(httpMethod: .GET) { (response, statusCode, data) in
+        request.loadWithData(httpMethod: .GET) {[weak self] (error, statusCode, data) in
             if statusCode == 200, let data = data{
                 guard let details = try? JSONDecoder().decode(HomeScreenDetails.self, from: data) else {return}
                 print("Screen Details\(details.rows.count)")
-                self.screenDetails = details
-                self.screenDetails?.rows = details.rows.filter({ (row) -> Bool in
+                self?.screenDetails = details
+                self?.screenDetails?.rows = details.rows.filter({ (row) -> Bool in
+                    /*
+                     Filter rows 
                     if row.title == nil && row.description == nil && row.imageHref == nil {
                         return false
                     }
+                     */
                     return true
                 })
-                //print("filtered rows:\(String(describing: self.screenDetails?.rows.count))")
                 completion(.Success(""))
                 return
             }
-             guard let error = response["error"] as? String else {
-                guard let error = response["error"] as? NSError else {
-                    completion(.Failed("Please try again"))
-                    return
-                }
-                completion(.Failed(error.localizedDescription))
+            if let error = error {
+                
+                completion(.Failed(error.message))
                 return
             }
-             completion(.Failed(error))
+             completion(.Failed("error"))
         }
         
     }
