@@ -24,15 +24,33 @@ class DynamicListWithoutStoryBoardTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+    
     
     func testSuccessGettingList() {
         let promise = expectation(description: "downloaded successfully")
         viewModel.getList { (state) in
             switch state {
+            case .Success(_):
+                promise.fulfill()
+            default:
+                XCTFail("download failed")
+                break
+            }
+        }
+        
+        wait(for: [promise], timeout: 5)
+    }
+    //
+    
+    func testNoInternetConnection() {
+        let errorMsg = "The Internet connection appears to be offline."
+        let promise = expectation(description: "The Internet connection appears to be offline")
+        viewModel.getList { (state) in
+            switch state {
+            case .Failed(let msg):
+                if msg == errorMsg {
+                    promise.fulfill()
+                }
             case .Success(_):
                 promise.fulfill()
             default:

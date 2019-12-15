@@ -30,8 +30,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.placeHolderString = "Downloading..."
-        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .grouped) //UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        self.placeHolderString = AppConstants.noData.rawValue
+        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .grouped)
         //self.tableView.style = UITableView.Style.grouped
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -42,7 +42,6 @@ class HomeViewController: UIViewController {
         self.addRefreshController()
         
         self.getList(isFromPullToRefresh: false)
-        // Do any additional setup after loading the view.
     }
     
     func addConstraints() {
@@ -78,7 +77,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     internal func getList(isFromPullToRefresh: Bool) {
         self.isDownloading = true
-        self.placeHolderString = "Please Wait..."
+        self.placeHolderString = AppConstants.downloading.rawValue
         self.viewModel.getList { [weak self](state) in
             guard let self = self else {return}
             self.isDownloading = false
@@ -89,7 +88,7 @@ extension HomeViewController {
             }
             switch state {
             case .Success(_):
-                self.placeHolderString = "Loading.."
+                self.placeHolderString = AppConstants.loading.rawValue
                 DispatchQueue.main.async {
                     self.title = self.viewModel.screenDetails?.title
                 }
@@ -130,6 +129,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5.0
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

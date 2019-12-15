@@ -38,7 +38,7 @@ extension HomeViewModel {
                 completion(.Failed(error.message))
                 return
             }
-             completion(.Failed("error"))
+            completion(.Failed(AppConstants.error.rawValue))
         }
         
     }

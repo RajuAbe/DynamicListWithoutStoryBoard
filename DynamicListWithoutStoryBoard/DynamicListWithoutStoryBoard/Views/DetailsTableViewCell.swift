@@ -10,6 +10,7 @@ import UIKit
 import SDWebImage
 
 class DetailsTableViewCell: UITableViewCell {
+    
     /**
      Profile imageview
         - cornerRadius = 30 (circular)
@@ -18,7 +19,7 @@ class DetailsTableViewCell: UITableViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.layer.cornerRadius = 30
+        image.layer.cornerRadius = profileImageViewHeigth/2
         image.clipsToBounds = true
         return image
     }()
@@ -27,7 +28,7 @@ class DetailsTableViewCell: UITableViewCell {
      */
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: boldFontSize)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,9 +37,7 @@ class DetailsTableViewCell: UITableViewCell {
      */
     var descriptionLabel:UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13)
-        
-        //label.backgroundColor =  colorLiteral(red: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: normalForntSize)
         //label.numberOfLines = 0
         //label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -64,16 +63,14 @@ class DetailsTableViewCell: UITableViewCell {
         super.init(coder: coder)
         //fatalError("init(coder:) has not been implemented")
     }
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-//    }
+
     /**
         Initializing the UI
         -
      - Contains all constarints
      */
     private func initializeUI() {
+        self.selectionStyle = .none
         let marginGuide = contentView.layoutMarginsGuide
         
         self.contentView.addSubview(profileImageView)
@@ -82,24 +79,24 @@ class DetailsTableViewCell: UITableViewCell {
         
         // imageView autolayouts
         profileImageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
-        profileImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        profileImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: marginConstant).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: profileImageViewHeigth).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: profileImageViewHeigth).isActive = true
         
         // title Label
         titleLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 5).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor, constant: -10).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: marginConstant).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor, constant: -marginConstant).isActive = true
         
         // DescriptionLabel constraints
         
-        descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
+        descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: marginConstant).isActive = true
         descriptionLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
         let bottomConstraint = descriptionLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor, constant: -5)
         bottomConstraint.priority = .defaultLow
         bottomConstraint.isActive = true
-        descriptionHeightConstraint = descriptionLabel.heightAnchor.constraint(equalToConstant: 17)
+        descriptionHeightConstraint = descriptionLabel.heightAnchor.constraint(equalToConstant: descriptionLabelMinHeight)
         descriptionHeightConstraint.isActive = true
         
     }
@@ -110,7 +107,7 @@ class DetailsTableViewCell: UITableViewCell {
      - setting image view and all labels value
      */
     internal func configCell(at indexPath: IndexPath, rowData row: Rows) {
-        let height = descriptionLabel.heightForLabel(text: row.description ?? AppConstants.noData.rawValue, font: UIFont.systemFont(ofSize: 13), width: contentView.bounds.width-78)
+        let height = descriptionLabel.heightForLabel(text: row.description ?? AppConstants.noData.rawValue, font: UIFont.systemFont(ofSize: normalForntSize), width: contentView.bounds.width-(self.descriptionLabel.frame.origin.x+marginConstant))
         
         self.titleLabel.text = row.title ?? AppConstants.noData.rawValue
         descriptionHeightConstraint.constant = height
